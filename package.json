@@ -2,13 +2,13 @@
   "scripts": {
     "start": "snowpack dev",
     "dev": "snowpack dev",
-    "build-simple": "snowpack build",
+    "build-watch": "BUILD_STEP=watch snowpack build",
     "build": "snowpack build && BUILD_STEP=ssr snowpack build && npm run build-html",
     "build-html": "BUILD_STEP=ssr node libs/build-html-files/index.js",
     "servee": "node libs/serve/index.js",
     "serve": "es-dev-server --root-dir build --port 8081 --watch --open",
-    "build-serve": "npm run build-simple && npm run serve",
-    "watch": "nodemon -e js,svelte --watch src --exec 'snowpack build'",
+    "build-serve": "npm run build-watch && npm run serve",
+    "watch": "nodemon -e js,svelte --watch src --exec 'snowpack build-watch'",
     "test": "jest"
   },
   "dependencies": {

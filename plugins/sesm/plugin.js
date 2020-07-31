@@ -77,7 +77,7 @@ module.exports = function plugin(snowpackConfig, pluginOptions) {
         result.resources = { css: css && css.code };
       }
       // CREATE HTML FILE FOR PAGE
-      if (/_pages/.test(filePath)) {
+      if (process.env.BUILD_STEP === "watch" && /_pages/.test(filePath)) {
         console.log({ snowpackConfig });
         // filePath is like '/home/username/my_projects/project-name/src/_pages/index.svelte'
         const browserHtmlFilePath = filePath
