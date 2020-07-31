@@ -1,7 +1,14 @@
 {
   "scripts": {
     "start": "snowpack dev",
-    "build": "snowpack build",
+    "dev": "snowpack dev",
+    "build-simple": "snowpack build",
+    "build": "snowpack build && BUILD_STEP=ssr snowpack build && npm run build-html",
+    "build-html": "BUILD_STEP=ssr node libs/build-html-files/index.js",
+    "servee": "node libs/serve/index.js",
+    "serve": "es-dev-server --root-dir build --port 8081 --watch --open",
+    "build-serve": "npm run build-simple && npm run serve",
+    "watch": "nodemon -e js,svelte --watch src --exec 'snowpack build'",
     "test": "jest"
   },
   "dependencies": {
@@ -11,7 +18,11 @@
     "@snowpack/app-scripts-svelte": "^1.7.0",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/svelte": "^3.0.0",
+    "es-dev-server": "^1.57.1",
     "jest": "^25.4.0",
-    "snowpack": "^2.6.4"
+    "live-server": "^1.2.1",
+    "nodemon": "^2.0.4",
+    "rollup-plugin-svelte": "^5.2.3",
+    "snowpack": "^2.7.2"
   }
 }
