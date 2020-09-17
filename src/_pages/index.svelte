@@ -1,10 +1,13 @@
 <script>
-  let color = "red";
-
-  const onClick = () => {
-    color = color === "blue" ? "red" : "blue";
-  };
+  import MainTitle from '../partials/MainTitle.h.svelte';
+  import LinkTest from '../partials/LinkTest.svelte';
 </script>
 
-<h1 style={`color: ${color}`} on:click={onClick}>Hello World</h1>
-<a href="/tests/">Tests</a>
+<div class="page">
+  <LinkTest />
+  <p>Hola</p>
+  <MainTitle altColor="pink" />
+  <MainTitle altColor="green">
+    <div>Some useless child</div>
+  </MainTitle>
+</div>

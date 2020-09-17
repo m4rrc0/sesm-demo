@@ -1,48 +1,58 @@
 const browserConfig = {
   plugins: [
     // ["@snowpack/plugin-svelte", {}],
-    ["./plugins/sesm/plugin.js", {}],
+    ['./plugins/sesm/plugin.js', {}],
   ],
   scripts: {
-    "mount:src": "mount src --to /_dist_",
+    'mount:src': 'mount src --to /_dist_',
   },
 };
 
 const ssrOptions = {
-  generate: "ssr",
-  // css: true,
+  generate: 'ssr',
+  // format: "cjs",
+  // not setting the `css` option for SSR gives 'document is not defined' error.
+  //Maybe it is needed to generate CSS when compiling anyway?
+  css: true,
+  // preserveComments: true,
 };
 const ssrConfig = {
-  plugins: [["@snowpack/plugin-svelte", ssrOptions]],
+  plugins: [
+    // ["@snowpack/plugin-svelte", ssrOptions],
+    ['./plugins/sesm/plugin.js', ssrOptions],
+  ],
   scripts: {
-    "mount:ssr": "mount src --to /_dist_",
+    'mount:ssr': 'mount src --to /_dist_',
   },
   devOptions: {
-    out: "build-temp",
+    out: 'build-temp',
   },
 };
 
-const config = process.env.BUILD_STEP === "ssr" ? ssrConfig : browserConfig;
+const config = process.env.BUILD_STEP === 'ssr' ? ssrConfig : browserConfig;
 
 // see https://www.snowpack.dev/#all-config-options
 module.exports = {
-  plugins: ["@snowpack/plugin-dotenv", ...config.plugins],
+  plugins: ['@snowpack/plugin-dotenv', ...config.plugins],
   scripts: {
     // Pipe every .css file through PostCSS CLI
     // "build:css": "postcss",
-    "mount:public": "mount public --to /",
+    'mount:public': 'mount public --to /',
     ...config.scripts,
   },
   installOptions: {
-    rollup: {
-      plugins: [require("rollup-plugin-svelte")()], // necessary to be able to use svelte libraries which make use of .svelte files
-    },
+    // Not necessary anymore as it is done by the svelte plugin
+    // rollup: {plugins: [require("rollup-plugin-svelte")()], // necessary to be able to use svelte libraries which make use of .svelte files},
   },
-  devOptions: { bundle: false, open: "none", ...config.devOptions },
+  devOptions: { bundle: false, open: 'none', ...config.devOptions },
   buildOptions: {
-    // clean: true,
+    clean: true,
+    minify: false,
     ...config.buildOptions,
   },
   browserConfig,
   ssrConfig,
+  // alias: {
+  //   partials: './src/partials',
+  // },
 };

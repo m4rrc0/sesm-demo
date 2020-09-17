@@ -3,26 +3,34 @@
     "start": "snowpack dev",
     "dev": "snowpack dev",
     "build-watch": "BUILD_STEP=watch snowpack build",
-    "build": "snowpack build && BUILD_STEP=ssr snowpack build && npm run build-html",
+    "build-ssr": "BUILD_STEP=ssr snowpack build",
+    "build-browser": "BUILD_STEP=browser snowpack build",
     "build-html": "BUILD_STEP=ssr node libs/build-html-files/index.js",
+    "build": "npm run build-ssr && npm run build-browser && npm run build-html",
     "servee": "node libs/serve/index.js",
     "serve": "es-dev-server --root-dir build --port 8081 --watch --open",
     "build-serve": "npm run build-watch && npm run serve",
-    "watch": "nodemon -e js,svelte --watch src --exec 'snowpack build-watch'",
+    "watchh": "nodemon -e js,svelte --watch src --exec 'npm run build-watch'",
+    "watch": "BUILD_STEP=watch snowpack build --watch",
     "test": "jest"
   },
   "dependencies": {
-    "svelte": "^3.21.0"
+    "svelte": "git+https://github.com/wix-incubator/wix-svelte.git"
   },
   "devDependencies": {
-    "@snowpack/app-scripts-svelte": "^1.7.0",
-    "@testing-library/jest-dom": "^5.5.0",
+    "@snowpack/app-scripts-svelte": "^1.8.4",
+    "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/svelte": "^3.0.0",
-    "es-dev-server": "^1.57.1",
-    "jest": "^25.4.0",
+    "es-dev-server": "^1.57.4",
+    "eslint": "^7.9.0",
+    "eslint-plugin-svelte3": "^2.7.3",
+    "jest": "^26.4.2",
+    "json5": "^2.1.3",
     "live-server": "^1.2.1",
     "nodemon": "^2.0.4",
-    "rollup-plugin-svelte": "^5.2.3",
-    "snowpack": "^2.7.2"
+    "prettier": "^2.1.1",
+    "prettier-plugin-svelte": "^1.2.0",
+    "rollup-plugin-svelte": "^6.0.0",
+    "snowpack": "^2.10.1"
   }
 }
