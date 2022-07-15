@@ -12,7 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "svelte": "^3.21.0"
+    "svelte": "^3.49.0"
   },
   "devDependencies": {
     "@snowpack/app-scripts-svelte": "^1.7.0",
